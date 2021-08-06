@@ -1,30 +1,46 @@
 
 
-let form = document.querySelector("form");
-form.addEventListener('submit',
+let searchButton = document.querySelector("#search");
+searchButton.addEventListener('click', goToSearchResults)
 
-    async (e) => {
-        e.preventDefault()
-        //document.location = "http://127.0.0.1:5500/client/searchResult.html";
-        console.log(e)
-        clearContent();
-        let search = e.target.searchWord.value
-        console.log(search)
-        let searchFormatted = search.toLowerCase().replace(" ", "-")
-        let listings;
-        await fetch(`http://localhost:8000/results/${searchFormatted}`)
-            .then(response => response.json())
-            .then(results => listings = results)
-            .catch(err => console.log(`whoops, ${err}`));
-        seperateInformation(listings)
+function goToSearchResults(e) {
+    e.preventDefault()
+    let search = document.querySelector('#searchWord').value
+    console.log(search)
+    let searchFormatted = search.toLowerCase().replace(" ", "-")
+    window.location.assign(`http://127.0.0.1:5501/client/searchResult.html?${searchFormatted}`)
+}
 
-        // document.querySelector("#text").textContent = JSON.stringify(listings)
-    })
+let randomButton = document.querySelector("#random");
+randomButton.addEventListener('click', randomListing)
+
+async function randomListing(e) {
+    e.preventDefault();
+    clearContent();
+    console.log("hi")
+    let search = document.querySelector('#searchWord').value
+    console.log(search)
+    let searchFormatted = search.toLowerCase().replace(" ", "-")
+    let listings;
+    await fetch(`http://localhost:8000/results/${searchFormatted}`)
+        .then(response => response.json())
+        .then(results => listings = results)
+        .catch(err => console.log(`whoops, ${err}`));
+    fetchListing(listings);
+}
+
+function fetchListing(listings) {
+    //select random search item
+    let listItem = listings[Math.floor(Math.random()*10)]
+    window.location.href = listItem.url;
+}
 
 
 function clearContent() {
     document.querySelector("#container").textContent = ""
 }
+
+
 
 
 function seperateInformation(searchResults) {
@@ -49,4 +65,4 @@ function seperateInformation(searchResults) {
 }
 
 
-// module.exports = {getListings}
+module.exports = {goToSearchResults}

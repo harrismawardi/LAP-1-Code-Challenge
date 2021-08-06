@@ -16,19 +16,20 @@ section {
 
 article {
     padding: 20px;
-    line-height: 10%;
 }
 
 #logo {
+    display: flex;
     font-weight: 550;
     letter-spacing: -3.5px;
     font-size: 25px;
-    cursor: default;
+    cursor: normal;
 }
 
 .logo {
     text-decoration: none;
-    padding-right: 30px;
+    padding: 4px 20px 0px 10px;
+
 }
 
 .search {
@@ -85,14 +86,21 @@ img {
 a {
     text-decoration: none;
     color: darkgrey;
+    
 }    
 
-a.resultTitle {
+a.resultTitle h1 {
     color: #1906A7;
+    margin: 10px 0px;
+  
 }
 
 a.resultTitle:hover {
     text-decoration: underline;
+}
+
+p.resultText {
+    margin-top: 0;
 }
 
 
