@@ -22,7 +22,7 @@ async function getResults(e) {
 function goToSearchResults(e) {
     e.preventDefault();
     let search = document.querySelector('#searchWord').value
-    let searchFormatted = search.toLowerCase().replace(" ", "-")
+    let searchFormatted = search.toLowerCase().replace(/\s+/g, "-")
     window.location.assign(`http://127.0.0.1:5501/client/searchResult.html?${searchFormatted}`)
 }
 

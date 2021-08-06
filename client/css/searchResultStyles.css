@@ -14,6 +14,11 @@ section {
     vertical-align: middle;
 }
 
+#container {
+
+    padding: 0% 8%;
+}
+
 article {
     padding: 20px;
 }
