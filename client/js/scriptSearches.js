@@ -1,8 +1,3 @@
-
-
-// let searchButton = document.querySelector('#search')
-// searchButton.addEventListener('click', getResults)
-
 window.addEventListener('load', getResults)
 document.querySelector('#search').addEventListener('click', goToSearchResults)
 

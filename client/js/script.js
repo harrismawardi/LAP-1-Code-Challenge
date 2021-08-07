@@ -1,68 +1,26 @@
-
-
-let searchButton = document.querySelector("#search");
-searchButton.addEventListener('click', goToSearchResults)
+//searchbutton
+document.querySelector("#search").addEventListener('click', goToSearchResults);
+//randombutton
+document.querySelector("#random").addEventListener('click', randomPage);
 
 function goToSearchResults(e) {
     e.preventDefault()
     let search = document.querySelector('#searchWord').value
-    console.log(search)
-    let searchFormatted = search.toLowerCase().replace(" ", "-")
+    let searchFormatted = search.toLowerCase().replace(/\s/g, "-")
     window.location.assign(`http://127.0.0.1:5501/client/searchResult.html?${searchFormatted}`)
 }
 
-let randomButton = document.querySelector("#random");
-randomButton.addEventListener('click', randomListing)
-
-async function randomListing(e) {
+async function randomPage(e) {
     e.preventDefault();
-    clearContent();
-    console.log("hi")
-    let search = document.querySelector('#searchWord').value
-    console.log(search)
-    let searchFormatted = search.toLowerCase().replace(" ", "-")
-    let listings;
+    let search = document.querySelector('#searchWord').value;
+    let searchFormatted = search.toLowerCase().replace(/\s+/g, "-");
     await fetch(`http://localhost:8000/results/${searchFormatted}`)
         .then(response => response.json())
-        .then(results => listings = results)
-        .catch(err => console.log(`whoops, ${err}`));
-    fetchListing(listings);
+        .then(results => randomListing(results))
+        .catch(err => console.log(`whoops, ${err}`));   
 }
 
-function fetchListing(listings) {
-    //select random search item
+function randomListing(listings) {
     let listItem = listings[Math.floor(Math.random()*10)]
     window.location.href = listItem.url;
 }
-
-
-function clearContent() {
-    document.querySelector("#container").textContent = ""
-}
-
-
-
-
-function seperateInformation(searchResults) {
-    console.log(searchResults)
-    for (const listItem of searchResults) {
-
-        let listingContainer = document.createElement("div")
-        let url = document.createElement('span')
-        url.textContent = listItem.url
-        let pageTitle = document.createElement('h3')
-        pageTitle.textContent = listItem.pageTitle
-        let text = document.createElement('p')
-        text.textContent = listItem.text
-
-        listingContainer.appendChild(url)
-        listingContainer.appendChild(pageTitle)
-        listingContainer.appendChild(text)
-
-        document.querySelector("#container").appendChild(listingContainer)
-
-    }
-}
-
-
-module.exports = {goToSearchResults}
